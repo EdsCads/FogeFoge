@@ -1,6 +1,5 @@
 #ifndef FANTASMA_H
 #define FANTASMA_H
-#define FANTASMA 'F'
 
 typedef struct
 {

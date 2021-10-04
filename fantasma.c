@@ -14,16 +14,13 @@ int fantasmaVai(int xAtual,int yAtual,int* xDestino,int* yDestino){
 	srand(time(0));
 
   for(int i=0;i<10;i++){
-    int posicao = rand()%4;
+    int posicao = rand() % 4;
 
-    if(podeAndar(&m,FANTASMA,
-      					opcoes[posicao][0], 
-      					opcoes[posicao][1])){
-                            
-    	*xDestino = opcoes[posicao][0];
-      *yDestino = opcoes[posicao][1];
-      return 1;
-    }
+		if(podeAndar(&m, FANTASMA, opcoes[posicao][0], opcoes[posicao][1])) if(podeAndar(&m, PILULA, opcoes[posicao][0], opcoes[posicao][1])){
+			*xDestino = opcoes[posicao][0];
+			*yDestino = opcoes[posicao][1];
+			return 1;
+		}
   }
 
   return 0;
@@ -34,12 +31,16 @@ void andaFantasma(){
   copiaMapa(&copia,&m);
   for(int i=0;i<copia.linhas;i++){
     for(int j=0;j<copia.colunas;j++){
-      if(copia.matriz[i][j]==FANTASMA){
-        int xDestino,yDestino;
-        int encontrou = fantasmaVai(i,j,&xDestino,&yDestino);
-        if(encontrou){
-          andaMapa(&m,i,j,xDestino,yDestino);
-        }
+      if(copia.matriz[i][j] == FANTASMA) {
+
+				int xdestino;
+				int ydestino;
+
+				int encontrou = fantasmaVai(i, j, &xdestino, &ydestino);
+
+				if(encontrou) {
+					andaMapa(&m, i, j, xdestino, ydestino);
+				}
       }
     }
   }

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "mapa.h"
+#include "interface.h"
 
 void alocaMapa(MAPA* m){
     m->matriz=malloc(sizeof(char*) * m->linhas);
@@ -27,13 +28,6 @@ void lerMapa(MAPA *m) {
         fscanf(f, "%s", m->matriz[i]);
     }
     fclose(f);
-}
-
-void exibeMapa(MAPA* m){
-	for(int i = 0; i < m->linhas; i++) 
-	{
-    printf("%s\n", m->matriz[i]);
-  }
 }
 
 int encontraMapa(MAPA* m,POS* pos,char c){
@@ -82,16 +76,16 @@ void copiaMapa(MAPA* destino,MAPA* origem){
 	}
 }
 
-void andaMapa(MAPA* m, int xOrigem, int yOrigem, int xDest, int yDest){
-	char aux;
-	aux = m->matriz[xDest][yDest];
-	m->matriz[xDest][yDest]=m->matriz[xOrigem][yOrigem];
-	m->matriz[xOrigem][yOrigem]=aux;
-}
-
 int podeAndar(MAPA* m,char personagem,int x, int y){
 	return 
 		!ehParede(m,x,y) &&
 		podeIr(m,x,y) &&
 		!ehPersonagem(m,personagem,x,y);
+}
+
+void andaMapa(MAPA* m, int xOrigem, int yOrigem, int xDest, int yDest){
+	char aux;
+	aux = m->matriz[xDest][yDest];
+	m->matriz[xDest][yDest]=m->matriz[xOrigem][yOrigem];
+	m->matriz[xOrigem][yOrigem]=VAZIO;
 }
